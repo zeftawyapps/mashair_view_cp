@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:bloc/bloc.dart';
 
@@ -151,7 +152,6 @@ engen.despose();
         emit(ShapeDraw(shapes: engen.shapes, layout: engen.layout));
       }
     });
-
     on<SaveFile>((event, emit) async {
       Layout l = engen.layout;
       Size size = Size(l.width, l.height);
@@ -159,8 +159,10 @@ engen.despose();
       ImageExporter export = ImageExporter(
           Shaps: engen.shapes,
           board: RectangleShape(xPos: 0, yPos: 0, width: size.width, height: size.height));
-      var value =     await   export.exportUint8List()  ;
-      emit(DrawSaved(image: value, register: register));
+      var image  =     await   export.paint()  ;
+      var bytData  = await image  .toByteData(format: ui.ImageByteFormat.png);
+      var unit8List = bytData!.buffer.asUint8List();
+      emit(DrawSaved(image: image, byetData: bytData , imageuti8list: unit8List  , register: register));
 
 
     });

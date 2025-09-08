@@ -1,3 +1,4 @@
+
 part of 'print_bloc.dart';
 
 @immutable
@@ -31,6 +32,7 @@ final class ShapeDraw extends PrintState {
   final class DrawSaved  extends PrintState {
   final  Register  register  ;
    ByteData?  byetData  ;
-   Uint8List? image;
-  DrawSaved({  required   this. image ,  required this.register ,   this. byetData });
+   Uint8List? imageuti8list;
+   ui.Image? image;
+  DrawSaved({  this.image ,      this. imageuti8list ,  required this.register ,   this. byetData });
   }

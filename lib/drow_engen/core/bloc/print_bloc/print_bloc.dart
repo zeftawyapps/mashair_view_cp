@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:bloc/bloc.dart';
 
@@ -57,18 +58,28 @@ class DrawEnginePrintBloc extends Bloc<PrintEvent, PrintState> {
       emit(ShapeDraw(shapes: engen.shapes, layout: engen.layout));
     });
     on<SaveFile>((event, emit) async {
-      Layout l = engen.layout;
-      double width = event.width ?? l.width;
+     Layout l = engen.layout;
+       double width = event.width ?? l.width;
       double height = event.height ?? l.height;
-    bool isDouble = event.isDouble ?? false;
-      Size size = Size( width,  height);
-      register.onShapeChanged(engen.shapes);
-      ImageExporter export = ImageExporter(
+     bool isDouble = event.isDouble ?? false;
+       Size size = Size( width,  height);
+       register.onShapeChanged(engen.shapes);
+       ImageExporter export = ImageExporter(
           Shaps: engen.shapes,
-          board: RectangleShape(xPos: 0, yPos: 0, width: size.width, height: size.height)
+           board: RectangleShape(xPos: 0, yPos: 0, width: size.width, height: size.height)
        , forPrint: true );
-      var value =     await   export.exportUint8List()  ;
-      emit(DrawSaved(image: value, register: register));
+      var image = await export.paint();
+      var bytData  = await image  .toByteData(format: ui.ImageByteFormat.png);
+    var unit8List = bytData!.buffer.asUint8List();
+      //   var value =     await   export.exportUint8List()  ;
+     emit(DrawSaved(image: image, imageuti8list: unit8List , byetData:  bytData , register: register));
+
+
+
      });
   }
+
+
+
+
 }

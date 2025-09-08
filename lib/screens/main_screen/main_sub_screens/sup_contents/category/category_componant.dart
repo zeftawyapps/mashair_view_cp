@@ -222,7 +222,7 @@ class _CategoryComponantState extends State<CategoryComponant> {
                                       ),
                                     ),
                                   ),
-                                  Text(data.name , style: TextStyle(fontSize: 20.sp ),),
+                                  Text(data.name , style: TextStyle(fontSize: 10.sp ),),
                                 ],
                               ),
                             ).animate().fadeIn(

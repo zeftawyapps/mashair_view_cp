@@ -46,8 +46,6 @@ dependencies:
   flutter_animate: ^4.5.0
   barcode: ^2.2.8
   qr_flutter: ^4.1.0
-
-
   JoDija_DataSource:
       git:
         url: https://github.com/zeftawyapps/jodija_data_souce_module.git

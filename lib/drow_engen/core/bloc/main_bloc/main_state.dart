@@ -55,9 +55,10 @@ final class ShapeDeleted extends MainState {
   ShapeProperty({ required this.shape});
   }
 
-  final class DrawSaved  extends MainState {
+final class DrawSaved  extends MainState {
   final  Register  register  ;
-   ByteData?  byetData  ;
-   Uint8List? image;
-  DrawSaved({  required   this. image ,  required this.register ,   this. byetData });
-  }
+  ByteData?  byetData  ;
+  Uint8List? imageuti8list;
+  ui.Image? image;
+  DrawSaved({  this.image ,      this. imageuti8list ,  required this.register ,   this. byetData });
+}

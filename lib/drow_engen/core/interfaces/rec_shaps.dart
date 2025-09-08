@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart%20';
 
 import '../shapes/size_point.dart';
 import 'base_shap.dart';
@@ -17,6 +18,12 @@ bool isResizable = true;
 bool isTranslatable = true;
   bool isResizing = false;
   bool isRotating = false;
+double pointSizerSize = 20; // the size of the point sizer
+  Color selectColor = Colors.red;
+  Color rotateColor = Colors.green;
+  Color sizeingColor = Colors.blue;
+  Color pointSizerColor = Colors.blue;
+  Color pointSizerBorderColor = Colors.black;
 
   bool isResizedLiftDown= false;
   bool isResizedLiftUp= false;
@@ -32,6 +39,15 @@ bool isTranslatable = true;
       {required super.id,
       required super.name,
       required super.type,
+      this.selectColor = Colors.blue ,
+        this.rotateColor = Colors.red ,
+        this.sizeingColor = Colors.green ,
+        this.pointSizerColor = Colors.white,
+        this.pointSizerBorderColor = Colors.black ,
+        this.pointSizerSize = 15,
+
+
+
       this.xPos = 0.0,
       this.yPos = 0.0,
       this.width = 100,
@@ -150,28 +166,54 @@ bool isTranslatable = true;
   // end drag
   void onPanEnd(DragEndDetails details) {
     _dragging = false;
+    isResizedLiftDown = false;
+    isResizedLiftUp = false;
+    isResizedRightDown = false;
+    isResizedRightUp = false;
+    isRotating = false;
+    isResizing = false;
   }
 
   void drawSizePoints(Canvas canvas ,double xPos , double yPos , double width , double height) {
+    Paint paint = Paint();
    if (!isResizable) {
       return;
     }
     if (isSelected) {
-      Paint paint = Paint();
+
+
+      paint.color =  isResizing ? sizeingColor  :  isRotating? rotateColor  :  selectColor;
+      paint.style = PaintingStyle.stroke;
+      paint.strokeWidth = 1;
+double meddele = pointSizerSize/2 ;
+      canvas.drawRect(
+          Rect.fromPoints(
+              Offset(  xPos,  yPos),
+              Offset( xPos + width,
+                   yPos +  height)),
+          paint);
+
+
+
       paint.color = Color(0xffC3A9CE);
       paint.style = PaintingStyle.fill;
-      const double resizeer = 5;
+
       // draw the size point lift up
-       sizePointLeftUp= SizePoint(xPos: xPos-resizeer, yPos: yPos-resizeer);
+       sizePointLeftUp= SizePoint(xPos: xPos-meddele, yPos: yPos-meddele
+       , size: pointSizerSize, color: pointSizerColor, borderColor: pointSizerBorderColor);
+
       sizePointLeftUp.drawShape(canvas);
       // draw the size point lift down
-      sizePointLeftDown = SizePoint(xPos: xPos-resizeer, yPos: yPos +  height-resizeer);
+      sizePointLeftDown = SizePoint(xPos: xPos-meddele, yPos: yPos +  height-meddele ,
+      size: pointSizerSize, color: pointSizerColor, borderColor: pointSizerBorderColor);
       sizePointLeftDown.drawShape(canvas);
       // draw the size point right up
-       sizePointRightUp = SizePoint(xPos:  xPos +  width-resizeer, yPos: yPos-resizeer);
+       sizePointRightUp = SizePoint(xPos:  xPos +  width-meddele, yPos: yPos-meddele
+       , size: pointSizerSize, color: pointSizerColor, borderColor: pointSizerBorderColor);
       sizePointRightUp.drawShape(canvas);
       // draw the size point right down
-      sizePointRightDown = SizePoint(xPos:  xPos +  width-resizeer, yPos: yPos +   height-resizeer);
+      sizePointRightDown = SizePoint(xPos:  xPos +  width-meddele, yPos: yPos +   height-meddele
+      , size: pointSizerSize, color: pointSizerColor, borderColor: pointSizerBorderColor);
       sizePointRightDown.drawShape(canvas);
     }
   }

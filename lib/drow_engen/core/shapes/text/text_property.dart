@@ -56,6 +56,7 @@ class _TextPropertyState extends State<TextProperty> {
   int isPorpertyState = 0;
   int textDirection = 0;
   bool isContstraint = false;
+  bool isSelfContstraint = false;
 
   @override
   void initState() {
@@ -87,7 +88,8 @@ class _TextPropertyState extends State<TextProperty> {
     y = newShape!.yPos;
     maxFontSize = newShape!.maxFontSize;
     minFontSize = newShape!.minFontSize;
-    isContstraint = newShape!.isContstraint;
+    isContstraint = newShape!.isLayoutContstraint;
+    isSelfContstraint = newShape!.isSelfContstraint;
     textDirection = newShape!.textDirection;
     List<TextStyle> _fonts = FontsList().getList();
     selectedStyle = _fonts.first;
@@ -113,7 +115,7 @@ class _TextPropertyState extends State<TextProperty> {
             y = newShape!.yPos;
             maxFontSize = newShape!.maxFontSize;
             minFontSize = newShape!.minFontSize;
-            isContstraint = newShape!.isContstraint;
+            isContstraint = newShape!.isLayoutContstraint;
           }
           // selectedStyle = _fonts.firstWhere((element) => element.fontFamily == newShape!.fontFamily);
         }
@@ -968,6 +970,38 @@ class _TextPropertyState extends State<TextProperty> {
                     ),
                   ),
                 ),
+                MaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      isSelfContstraint = !isSelfContstraint;
+                      reChange();
+                    });
+                  },
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 500),
+                    height: 50.h,
+                    width: 50.w,
+                    decoration: BoxDecoration(
+                      color: isSelfContstraint   ? Colors.blue : Colors.white,
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.rectangle,
+                        color: allignment == 1 ? Colors.white : Colors.black,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ),
 
               ],
             ),
@@ -1009,7 +1043,8 @@ class _TextPropertyState extends State<TextProperty> {
           layoutHeight: layoutHeight,
           layoutWidth: layoutWidth,
           textDirection: textDirection,
-          isContstraint: isContstraint,
+          isLayoutContstraint: isContstraint,
+          isSalfContstraint: isSelfContstraint,
           xPos: x,
           yPos: y);
     });

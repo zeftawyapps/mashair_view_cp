@@ -152,7 +152,7 @@ class _AppDrawEngenePagesState extends State<AppDrawEngenePages> {
                       image);
                 }
                 var imagedata = state.byetData;
-                image = imagedata!.buffer.asUint8List();
+                image = state.imageuti8list!;
               }
             },
           ),

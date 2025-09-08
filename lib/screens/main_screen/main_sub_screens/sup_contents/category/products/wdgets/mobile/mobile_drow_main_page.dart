@@ -17,6 +17,7 @@ import 'package:mashair_view_cp/screens/main_screen/main_sub_screens/sup_content
 import 'package:mashair_view_cp/screens/main_screen/main_sub_screens/sup_contents/category/products/wdgets/dfawing/widgets/layers/layers.dart';
 import 'package:mashair_view_cp/screens/main_screen/main_sub_screens/sup_contents/category/products/wdgets/dfawing/widgets/property/property.dart';
 import 'package:mashair_view_cp/screens/main_screen/main_sub_screens/sup_contents/category/products/wdgets/dfawing/widgets/tools_box/tool_box.dart';
+import 'package:mashair_view_cp/screens/main_screen/main_sub_screens/sup_contents/category/products/wdgets/mobile/pain_dialoge.dart';
 import 'package:mashair_view_cp/screens/main_screen/main_sub_screens/sup_contents/category/products/wdgets/mobile/widgets/board.dart';
 import 'package:mashair_view_cp/screens/main_screen/main_sub_screens/sup_contents/category/products/wdgets/mobile/widgets/layers/layers.dart';
 import 'package:mashair_view_cp/screens/main_screen/main_sub_screens/sup_contents/category/products/wdgets/mobile/widgets/property/property.dart';
@@ -87,35 +88,7 @@ double height = 400;
                 bloc!.add(SaveFile());
               },
               icon: Icon(Icons.save)),
-          // PopUpMenu(
-          //   iconSize: 20,
-          //   iconColor: Colors.black,
-          //   items: [
-          //     pubMenuItems(
-          //         title:  "15*20",
-          //         icon: Icons.save,
-          //         value: 1,
-          //         onTap: () {
-          //           setState(() {
-          //             width = 250;
-          //             height = 300;
-          //           });
-          //           bloc!.add(MainInitialEvent(layout: Layout(width: 250, height: 300)));
-          //         }),
-          //     pubMenuItems(
-          //         title: "20*30",
-          //         icon: Icons.save,
-          //         value: 2,
-          //         onTap: () {
-          //           setState(() {
-          //             width = 300;
-          //             height = 400;
-          //           });
-          //           bloc!.add(MainInitialEvent(layout: Layout(width: 300, height: 400)));
-          //         }),
-          //
-          //   ],
-          // )
+
         ],
       ),
       body: BlocListener<ProductBloc,
@@ -310,22 +283,28 @@ double height = 400;
                     isInited = false;
                   }
                   if (state is DrawSaved) {
-                    image = state.image;
-                    if (isprint) {
+                    image = state.imageuti8list;
+                    showDialog(context: context, builder:(c)=>
+                    PainDialoge( imageUint8List: state.imageuti8list!)
+                    );
 
-                    } else {
-                      if (widget.data != null) {
-                        saveBloc!.editProduct({
-                          "name": "data",
-                          "cardData": state.register.toString()
-                        }, widget.catId, widget.data!.id!, image);
-                      } else {
-                        saveBloc!.addProduct({
-                          "name": "data",
-                          "cardData": state.register.toString()
-                        }, widget.catId, image);
-                      }
-                    }
+
+
+                    // if (isprint) {
+                    //
+                    // } else {
+                    //   if (widget.data != null) {
+                    //     saveBloc!.editProduct({
+                    //       "name": "data",
+                    //       "cardData": state.register.toString()
+                    //     }, widget.catId, widget.data!.id!, image);
+                    //   } else {
+                    //     saveBloc!.addProduct({
+                    //       "name": "data",
+                    //       "cardData": state.register.toString()
+                    //     }, widget.catId, image);
+                    //   }
+                    // }
                   }
 
                   if (state is ShapeSelected) {
